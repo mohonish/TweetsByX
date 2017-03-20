@@ -12,6 +12,7 @@
 		8C50B67A1E7FB28400127273 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C50B6781E7FB28400127273 /* Main.storyboard */; };
 		8C50B67C1E7FB28400127273 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C50B67B1E7FB28400127273 /* Assets.xcassets */; };
 		8C50B67F1E7FB28400127273 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C50B67D1E7FB28400127273 /* LaunchScreen.storyboard */; };
+		8C50B6871E7FB42800127273 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50B6861E7FB42800127273 /* APIController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		8C50B67B1E7FB28400127273 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C50B67E1E7FB28400127273 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C50B6801E7FB28400127273 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C50B6861E7FB42800127273 /* APIController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIController.swift; path = Util/APIController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		8C50B6731E7FB28400127273 /* TweetsByX */ = {
 			isa = PBXGroup;
 			children = (
+				8C50B6881E7FB43300127273 /* Util */,
 				8C50B6741E7FB28400127273 /* AppDelegate.swift */,
 				8C50B6761E7FB28400127273 /* ViewController.swift */,
 				8C50B6781E7FB28400127273 /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				8C50B6801E7FB28400127273 /* Info.plist */,
 			);
 			path = TweetsByX;
+			sourceTree = "<group>";
+		};
+		8C50B6881E7FB43300127273 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				8C50B6861E7FB42800127273 /* APIController.swift */,
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +150,7 @@
 			files = (
 				8C50B6771E7FB28400127273 /* ViewController.swift in Sources */,
 				8C50B6751E7FB28400127273 /* AppDelegate.swift in Sources */,
+				8C50B6871E7FB42800127273 /* APIController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
