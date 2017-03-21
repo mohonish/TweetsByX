@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol HomeViewModelProtocol: class {
-    
+    func reloadData()
 }
 
 public class HomeViewModel {
@@ -18,20 +18,45 @@ public class HomeViewModel {
     
     private var currentPage = -1
     
+    var tweets = [Tweet]() {
+        didSet {
+            self.delegate?.reloadData()
+        }
+    }
+    
     public func authenticate() {
         APIController.getAuthToken(success: { [weak self] (response) in
-            self?.loadTweets()
+            if self?.currentPage == -1 {
+                self?.loadInitialTweets()
+            }
         }, failure: { (error) in
             print("\nError: \n\(error.errorMessage)")
         })
     }
     
-    public func loadTweets() {
-        APIController.fetchTweetsSince(since_id: nil, success: { (response) in
-            print("\nRESPONSE:\n\(response)")
+    public func loadInitialTweets() {
+        APIController.fetchTweetsSince(since_id: nil, success: { [weak self] (response) in
+            
+            if let newTweets = self?.parseTweets(json: response) {
+                self?.tweets = newTweets
+            }
+            
         }, failure: { (error) in
             print("\nError: \n\(error.errorMessage)")
         })
+    }
+    
+}
+
+extension HomeViewModel {
+    
+    fileprivate func parseTweets(json: [Dictionary<String, Any>]) -> [Tweet] {
+        var tweets = [Tweet]()
+        for element in json {
+            let thisTweet = Tweet(json: element)
+            tweets.append(thisTweet)
+        }
+        return tweets
     }
     
 }

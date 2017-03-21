@@ -10,6 +10,8 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var tableView: UITableView!
+    
     let viewModel = HomeViewModel()
     
     override func viewDidLoad() {
@@ -33,7 +35,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewModelProtocol {
     
-    
+    func reloadData() {
+        DispatchQueue.main.async(execute: { [weak self] in
+            self?.tableView.reloadData()
+        })
+    }
     
 }
 
