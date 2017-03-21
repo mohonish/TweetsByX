@@ -15,6 +15,8 @@ class HomeViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var loadingView: UIView!
+    
     // MARK: - Class Members
     
     //Refresh control for pull to refresh.
@@ -127,6 +129,7 @@ extension HomeViewController: HomeViewModelProtocol {
     //Used by view model to update view whenever data changes.
     func reloadData() {
         DispatchQueue.main.async(execute: { [weak self] in
+            self?.loadingView.isHidden = true
             self?.tableView.reloadData()
             self?.refreshControl.endRefreshing()
         })

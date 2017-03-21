@@ -27,17 +27,45 @@
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.070000000000000007" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rBN-td-oqY" userLabel="Loading View">
+                                <rect key="frame" x="0.0" y="307" width="375" height="53"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="lqT-SL-fRs">
+                                        <rect key="frame" x="178" y="0.0" width="20" height="20"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading Tweets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9cP-r3-LAA">
+                                        <rect key="frame" x="142" y="35" width="92" height="18"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="lqT-SL-fRs" firstAttribute="centerX" secondItem="rBN-td-oqY" secondAttribute="centerX" id="89A-w2-ByW"/>
+                                    <constraint firstItem="9cP-r3-LAA" firstAttribute="centerX" secondItem="rBN-td-oqY" secondAttribute="centerX" id="Cmz-tE-mTU"/>
+                                    <constraint firstItem="9cP-r3-LAA" firstAttribute="top" secondItem="lqT-SL-fRs" secondAttribute="bottom" constant="15" id="LPq-Vn-QH4"/>
+                                    <constraint firstItem="lqT-SL-fRs" firstAttribute="top" secondItem="rBN-td-oqY" secondAttribute="top" id="MDd-mg-rK9"/>
+                                    <constraint firstAttribute="bottom" secondItem="9cP-r3-LAA" secondAttribute="bottom" id="lfp-Rl-ezN"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rBN-td-oqY" secondAttribute="trailing" id="1G1-dS-DOe"/>
                             <constraint firstAttribute="trailing" secondItem="5te-0y-pFS" secondAttribute="trailing" id="7tt-nX-cnO"/>
+                            <constraint firstItem="rBN-td-oqY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="HyT-pv-4Ng"/>
+                            <constraint firstItem="rBN-td-oqY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JhB-3n-LC0"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="5te-0y-pFS" secondAttribute="bottom" id="Kz4-e9-6ty"/>
                             <constraint firstItem="5te-0y-pFS" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ZPp-2J-pCN"/>
+                            <constraint firstItem="rBN-td-oqY" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nH6-wf-u5U"/>
                             <constraint firstItem="5te-0y-pFS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="vUY-dB-5hy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="TweetsByX" id="igh-A5-sCR"/>
                     <connections>
+                        <outlet property="loadingView" destination="rBN-td-oqY" id="3xf-Gl-LOZ"/>
                         <outlet property="tableView" destination="5te-0y-pFS" id="Mcq-i7-1rM"/>
                     </connections>
                 </viewController>
