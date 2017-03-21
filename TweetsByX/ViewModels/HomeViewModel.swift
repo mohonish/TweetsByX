@@ -16,16 +16,16 @@ public class HomeViewModel {
     
     weak var delegate: HomeViewModelProtocol?
     
-    var isLoadingMore = false
-    var currentMaxID: String?
+    var isLoadingMore = false //Whether more tweets are being loaded currently.
+    var currentMaxID: String? //Current max_id value, which determines the last (oldest) tweet fetched.
     
-    var tweets = [Tweet]() {
+    var tweets = [Tweet]() { //All fetched Tweets
         didSet {
-            print("didSet: tweets: countNow: \(tweets.count) max_id: \(tweets.last?.id)")
-            self.delegate?.reloadData()
+            self.delegate?.reloadData() //Reload view whenever tweets list updates.
         }
     }
     
+    //Authenticate with Twitter to receive auth token.
     public func authenticate() {
         APIController.getAuthToken(success: { [weak self] (response) in
             self?.loadInitialTweets()
@@ -34,6 +34,7 @@ public class HomeViewModel {
         })
     }
     
+    //Load latest tweets.
     public func loadInitialTweets() {
         APIController.fetchTweetsSince(since_id: nil, success: { [weak self] (response) in
             
@@ -46,6 +47,7 @@ public class HomeViewModel {
         })
     }
     
+    //Load older tweets.
     public func loadPreviousTweets() {
         
         guard let maxID = self.tweets.last?.id else {
@@ -75,8 +77,10 @@ public class HomeViewModel {
     
 }
 
+// Extension for private methods.
 extension HomeViewModel {
     
+    //Parse list of tweets from json response.
     fileprivate func parseTweets(json: [Dictionary<String, Any>]) -> [Tweet] {
         var tweets = [Tweet]()
         for element in json {

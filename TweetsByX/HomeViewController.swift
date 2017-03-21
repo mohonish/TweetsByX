@@ -11,33 +11,30 @@ import Kingfisher
 
 class HomeViewController: UIViewController {
 
+    // MARK: - IBOutlets
+    
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Class Members
+    
+    //Refresh control for pull to refresh.
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(HomeViewController.handlePullToRefresh(_:)), for: UIControlEvents.valueChanged)
         return refreshControl
     }()
     
+    //View model
     let viewModel = HomeViewModel()
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "@" + Constants.Config.twitterHandle
-        
-        self.viewModel.delegate = self
-        
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
-        
-        self.tableView.tableFooterView = UIView()
-        self.tableView.register(UINib(nibName: "TweetTableViewCell", bundle: nil), forCellReuseIdentifier: "TweetTableViewCell")
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 120
-        self.tableView.addSubview(self.refreshControl)
-        
-        
+        setupUI()
+        setDelegates()
+        setupTableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -51,6 +48,30 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // MARK: - Setup
+    
+    func setupUI() {
+        //Navigation Bar Title
+        self.title = "@" + Constants.Config.twitterHandle
+        //Add further UI customization if required.
+    }
+    
+    func setDelegates() {
+        //View model delegate
+        self.viewModel.delegate = self
+        //Tableview delegate and datasource
+        self.tableView.dataSource = self
+        self.tableView.delegate = self
+    }
+    
+    func setupTableView() {
+        self.tableView.tableFooterView = UIView()
+        self.tableView.register(UINib(nibName: "TweetTableViewCell", bundle: nil), forCellReuseIdentifier: "TweetTableViewCell")
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 120
+        self.tableView.addSubview(self.refreshControl)
+    }
+    
     //MARK: - Pull To Refresh
     
     func handlePullToRefresh(_ refreshControl: UIRefreshControl) {
@@ -58,6 +79,8 @@ class HomeViewController: UIViewController {
     }
 
 }
+
+// MARK: - UITableView DataSource
 
 extension HomeViewController: UITableViewDataSource {
     
@@ -80,6 +103,8 @@ extension HomeViewController: UITableViewDataSource {
     
 }
 
+// MARK: - UIScrollView + UITableView Delegate
+
 extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -87,9 +112,10 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
         let scrollBottomPosition = scrollView.contentOffset.y + scrollView.bounds.size.height
         let difference = scrollContentHeight - scrollBottomPosition
         
+        //Difference determines the offset remaining to reach the bottom from user's current position.
+        //We trigger load more when the difference is reached to enable smooth scrolling, considering a user's normal reading pace.
         if difference < 200 && !self.viewModel.isLoadingMore {
-            print("loadMore")
-            self.viewModel.loadPreviousTweets()
+            self.viewModel.loadPreviousTweets() //Load more tweets
         }
         
     }
@@ -98,6 +124,7 @@ extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
 
 extension HomeViewController: HomeViewModelProtocol {
     
+    //Used by view model to update view whenever data changes.
     func reloadData() {
         DispatchQueue.main.async(execute: { [weak self] in
             self?.tableView.reloadData()

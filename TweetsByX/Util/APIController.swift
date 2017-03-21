@@ -6,9 +6,13 @@
 //  Copyright © 2017 mohonish. All rights reserved.
 //
 
+// NOTE:
+// Networking manager to handle authentication and GET/POST requests.
+
 import Foundation
 import UIKit
 
+//Generic API Error Class. Modify and extend for future cases.
 public struct APIError {
     
     var errorMessage = "Oops! Something went wrong. Please try again."
@@ -24,6 +28,7 @@ public struct APIError {
     }
 }
 
+//Enum for all known error cases from the frontend.
 public enum APIErrorType {
     case invalidURL, noResponseData, jsonSerializationFail, errorResponse, unauthorized
 }
@@ -45,6 +50,7 @@ public class APIController {
         
         POST(url: authEndpoint, headers: headers, success: { (response) in
             
+            //Parse authorization access token from response.
             guard let tokenType = response["token_type"] as? String,
                 let accessToken = response["access_token"] as? String else {
                     failure(APIError(errorType: APIErrorType.unauthorized))
@@ -52,7 +58,7 @@ public class APIController {
             }
             
             if tokenType == "bearer" {
-                Constants.accessToken = accessToken
+                Constants.accessToken = accessToken //Set current access token.
                 success()
             } else {
                 failure(APIError(errorType: APIErrorType.unauthorized))
@@ -61,6 +67,8 @@ public class APIController {
         }, failure: failure)
     }
     
+    //Use to fetch latest tweets.
+    //since_id would be the ID of the latest tweet already fetched. Returns new tweets if any.
     public static func fetchTweetsSince(since_id: String?, success: @escaping (_ response: [Dictionary<String, Any>]) -> Void, failure: @escaping (_ error: APIError) -> Void) {
         
         var parameters: [String: Any] = [
@@ -75,6 +83,8 @@ public class APIController {
         
     }
     
+    //Use to fetch older tweets (as user scrolls down).
+    //max_id is the ID of the oldest tweet that was already fetched (last tweet in the list sorted from new to old tweets).
     public static func fetchTweetsBefore(max_id: String, success: @escaping (_ response: [Dictionary<String, Any>]) -> Void, failure: @escaping (_ error: APIError) -> Void) {
         
         let parameters: [String: Any] = [
@@ -91,6 +101,7 @@ public class APIController {
 
 extension APIController {
     
+    //GET implementation
     fileprivate static func GET(url: String, parameters: [String: Any]?, success: @escaping (_ response: [Dictionary<String, Any>]) -> Void, failure: @escaping (_ error: APIError) -> Void) {
         
         guard var url = URL(string: url) else {
@@ -98,6 +109,7 @@ extension APIController {
             return
         }
         
+        //URLEncode parameters if any
         if let params = parameters {
             let paramString = params.stringFromHttpParameters()
             if let newURL = URL(string: "\(url)?\(paramString)") {
@@ -108,6 +120,7 @@ extension APIController {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "GET"
         
+        //Set Authorization token.
         if let token = Constants.accessToken {
             urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
@@ -144,6 +157,7 @@ extension APIController {
         task.resume()
     }
     
+    //POST implementation.
     fileprivate static func POST(url: String, headers: Dictionary<String, String>?, success: @escaping (_ response: [String: Any]) -> Void, failure: @escaping (_ error: APIError) -> Void) {
         
         guard let url = URL(string: url) else {
@@ -154,6 +168,7 @@ extension APIController {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = "POST"
         
+        //Set headers if any
         if let headers = headers {
             for (key, value) in headers {
                 urlRequest.setValue(value, forHTTPHeaderField: key)
@@ -194,15 +209,9 @@ extension APIController {
     
 }
 
+//NOTE: Extensions used primarily to create valid url encoded strings.
+
 extension String {
-    
-    /// Percent escapes values to be added to a URL query as specified in RFC 3986
-    ///
-    /// This percent-escapes all characters besides the alphanumeric character set and "-", ".", "_", and "~".
-    ///
-    /// http://www.ietf.org/rfc/rfc3986.txt
-    ///
-    /// :returns: Returns percent-escaped string.
     
     func addingPercentEncodingForURLQueryValue() -> String? {
         let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
@@ -213,14 +222,6 @@ extension String {
 }
 
 extension Dictionary {
-    
-    /// Build string representation of HTTP parameter dictionary of keys and objects
-    ///
-    /// This percent escapes in compliance with RFC 3986
-    ///
-    /// http://www.ietf.org/rfc/rfc3986.txt
-    ///
-    /// :returns: String representation in the form of key1=value1&key2=value2 where the keys and values are percent escaped
     
     func stringFromHttpParameters() -> String {
         let parameterArray = self.map { (key, value) -> String in

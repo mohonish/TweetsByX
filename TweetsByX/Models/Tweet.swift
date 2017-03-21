@@ -10,10 +10,10 @@ import Foundation
 
 public struct Tweet {
     
-    var id: String?
-    var text: String?
-    var username: String?
-    var profileImageURL: URL?
+    var id: String?             //Tweet ID
+    var text: String?           //Tweet body/text
+    var username: String?       //Tweet user (username)
+    var profileImageURL: URL?   //Tweet user image
     
     init(json: Dictionary<String, Any>) {
         if let thisID = json["id_str"] as? String {
