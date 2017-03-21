@@ -29,12 +29,14 @@ class HomeViewController: UIViewController {
         self.viewModel.delegate = self
         
         self.tableView.dataSource = self
+        self.tableView.delegate = self
+        
         self.tableView.tableFooterView = UIView()
         self.tableView.register(UINib(nibName: "TweetTableViewCell", bundle: nil), forCellReuseIdentifier: "TweetTableViewCell")
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 80
-        
+        self.tableView.estimatedRowHeight = 120
         self.tableView.addSubview(self.refreshControl)
+        
         
     }
     
@@ -74,6 +76,22 @@ extension HomeViewController: UITableViewDataSource {
         cell.bodyLabel.text = thisTweet.text
         cell.tweetImageView.kf.setImage(with: thisTweet.profileImageURL)
         return cell
+    }
+    
+}
+
+extension HomeViewController: UITableViewDelegate, UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let scrollContentHeight = scrollView.contentSize.height + scrollView.contentInset.bottom
+        let scrollBottomPosition = scrollView.contentOffset.y + scrollView.bounds.size.height
+        let difference = scrollContentHeight - scrollBottomPosition
+        
+        if difference < 200 && !self.viewModel.isLoadingMore {
+            print("loadMore")
+            self.viewModel.loadPreviousTweets()
+        }
+        
     }
     
 }

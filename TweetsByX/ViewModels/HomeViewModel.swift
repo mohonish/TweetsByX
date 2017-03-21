@@ -16,8 +16,12 @@ public class HomeViewModel {
     
     weak var delegate: HomeViewModelProtocol?
     
+    var isLoadingMore = false
+    var currentMaxID: String?
+    
     var tweets = [Tweet]() {
         didSet {
+            print("didSet: tweets: countNow: \(tweets.count) max_id: \(tweets.last?.id)")
             self.delegate?.reloadData()
         }
     }
@@ -40,6 +44,33 @@ public class HomeViewModel {
         }, failure: { (error) in
             print("\nError: \n\(error.errorMessage)")
         })
+    }
+    
+    public func loadPreviousTweets() {
+        
+        guard let maxID = self.tweets.last?.id else {
+            return
+        }
+        
+        if maxID == self.currentMaxID {
+            return
+        } else {
+            self.currentMaxID = maxID
+        }
+        
+        self.isLoadingMore = true
+        APIController.fetchTweetsBefore(max_id: maxID, success: { [weak self] (response) in
+            
+            if let newTweets = self?.parseTweets(json: response) {
+                self?.tweets.append(contentsOf: newTweets)
+            }
+            self?.isLoadingMore = false
+            
+        }, failure: { [weak self] (error) in
+            self?.isLoadingMore = false
+            print("\nError: \n\(error.errorMessage)")
+        })
+        
     }
     
 }
