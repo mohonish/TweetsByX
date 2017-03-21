@@ -10,9 +10,18 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    let viewModel = HomeViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        self.viewModel.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.viewModel.authenticate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,5 +29,11 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+extension HomeViewController: HomeViewModelProtocol {
+    
+    
+    
 }
 
