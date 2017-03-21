@@ -18,6 +18,9 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         
         self.viewModel.delegate = self
+        
+        self.tableView.dataSource = self
+        self.tableView.tableFooterView = UIView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,6 +34,25 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+extension HomeViewController: UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel.tweets.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //TODO
+        let cell = UITableViewCell()
+        cell.textLabel?.text = viewModel.tweets[indexPath.row].text
+        return cell
+    }
+    
 }
 
 extension HomeViewController: HomeViewModelProtocol {
