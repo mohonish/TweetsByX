@@ -63,7 +63,8 @@ public class HomeViewModel {
         self.isLoadingMore = true
         APIController.fetchTweetsBefore(max_id: maxID, success: { [weak self] (response) in
             
-            if let newTweets = self?.parseTweets(json: response) {
+            if var newTweets = self?.parseTweets(json: response) {
+                newTweets.removeFirst() //Fix for inclusive max_id tweet returned. 
                 self?.tweets.append(contentsOf: newTweets)
             }
             self?.isLoadingMore = false
