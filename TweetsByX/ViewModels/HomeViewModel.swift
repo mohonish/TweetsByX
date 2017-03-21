@@ -16,8 +16,6 @@ public class HomeViewModel {
     
     weak var delegate: HomeViewModelProtocol?
     
-    private var currentPage = -1
-    
     var tweets = [Tweet]() {
         didSet {
             self.delegate?.reloadData()
@@ -26,9 +24,7 @@ public class HomeViewModel {
     
     public func authenticate() {
         APIController.getAuthToken(success: { [weak self] (response) in
-            if self?.currentPage == -1 {
-                self?.loadInitialTweets()
-            }
+            self?.loadInitialTweets()
         }, failure: { (error) in
             print("\nError: \n\(error.errorMessage)")
         })

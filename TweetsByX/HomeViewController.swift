@@ -13,6 +13,12 @@ class HomeViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(HomeViewController.handlePullToRefresh(_:)), for: UIControlEvents.valueChanged)
+        return refreshControl
+    }()
+    
     let viewModel = HomeViewModel()
     
     override func viewDidLoad() {
@@ -28,6 +34,8 @@ class HomeViewController: UIViewController {
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 80
         
+        self.tableView.addSubview(self.refreshControl)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,6 +47,12 @@ class HomeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    //MARK: - Pull To Refresh
+    
+    func handlePullToRefresh(_ refreshControl: UIRefreshControl) {
+        self.viewModel.loadInitialTweets()
     }
 
 }
@@ -69,6 +83,7 @@ extension HomeViewController: HomeViewModelProtocol {
     func reloadData() {
         DispatchQueue.main.async(execute: { [weak self] in
             self?.tableView.reloadData()
+            self?.refreshControl.endRefreshing()
         })
     }
     
