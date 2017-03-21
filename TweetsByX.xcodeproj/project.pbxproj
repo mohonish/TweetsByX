@@ -10,6 +10,8 @@
 		8C4364221E80F3C3004FDEA4 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4364211E80F3C3004FDEA4 /* HomeViewModel.swift */; };
 		8C4364241E80F78D004FDEA4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4364231E80F78D004FDEA4 /* Constants.swift */; };
 		8C4364261E8129A0004FDEA4 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4364251E8129A0004FDEA4 /* Tweet.swift */; };
+		8C43642A1E8130C1004FDEA4 /* TweetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C4364281E8130C1004FDEA4 /* TweetTableViewCell.swift */; };
+		8C43642B1E8130C1004FDEA4 /* TweetTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C4364291E8130C1004FDEA4 /* TweetTableViewCell.xib */; };
 		8C50B6751E7FB28400127273 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50B6741E7FB28400127273 /* AppDelegate.swift */; };
 		8C50B6771E7FB28400127273 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C50B6761E7FB28400127273 /* HomeViewController.swift */; };
 		8C50B67A1E7FB28400127273 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C50B6781E7FB28400127273 /* Main.storyboard */; };
@@ -22,6 +24,8 @@
 		8C4364211E80F3C3004FDEA4 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeViewModel.swift; path = ViewModels/HomeViewModel.swift; sourceTree = "<group>"; };
 		8C4364231E80F78D004FDEA4 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = Util/Constants.swift; sourceTree = "<group>"; };
 		8C4364251E8129A0004FDEA4 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweet.swift; path = Models/Tweet.swift; sourceTree = "<group>"; };
+		8C4364281E8130C1004FDEA4 /* TweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TweetTableViewCell.swift; path = Views/TweetTableViewCell.swift; sourceTree = "<group>"; };
+		8C4364291E8130C1004FDEA4 /* TweetTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TweetTableViewCell.xib; path = Views/TweetTableViewCell.xib; sourceTree = "<group>"; };
 		8C50B6711E7FB28400127273 /* TweetsByX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TweetsByX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C50B6741E7FB28400127273 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C50B6761E7FB28400127273 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +47,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8C4364271E81306D004FDEA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8C4364251E8129A0004FDEA4 /* Tweet.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		8C43642C1E8130C6004FDEA4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8C4364281E8130C1004FDEA4 /* TweetTableViewCell.swift */,
+				8C4364291E8130C1004FDEA4 /* TweetTableViewCell.xib */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		8C50B6681E7FB28400127273 = {
 			isa = PBXGroup;
 			children = (
@@ -62,11 +83,12 @@
 		8C50B6731E7FB28400127273 /* TweetsByX */ = {
 			isa = PBXGroup;
 			children = (
+				8C4364271E81306D004FDEA4 /* Models */,
+				8C43642C1E8130C6004FDEA4 /* Views */,
 				8C50B6881E7FB43300127273 /* Util */,
 				8C50B6741E7FB28400127273 /* AppDelegate.swift */,
 				8C50B6761E7FB28400127273 /* HomeViewController.swift */,
 				8C4364211E80F3C3004FDEA4 /* HomeViewModel.swift */,
-				8C4364251E8129A0004FDEA4 /* Tweet.swift */,
 				8C50B6781E7FB28400127273 /* Main.storyboard */,
 				8C50B67B1E7FB28400127273 /* Assets.xcassets */,
 				8C50B67D1E7FB28400127273 /* LaunchScreen.storyboard */,
@@ -147,6 +169,7 @@
 				8C50B67F1E7FB28400127273 /* LaunchScreen.storyboard in Resources */,
 				8C50B67C1E7FB28400127273 /* Assets.xcassets in Resources */,
 				8C50B67A1E7FB28400127273 /* Main.storyboard in Resources */,
+				8C43642B1E8130C1004FDEA4 /* TweetTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,6 +186,7 @@
 				8C4364261E8129A0004FDEA4 /* Tweet.swift in Sources */,
 				8C50B6871E7FB42800127273 /* APIController.swift in Sources */,
 				8C4364221E80F3C3004FDEA4 /* HomeViewModel.swift in Sources */,
+				8C43642A1E8130C1004FDEA4 /* TweetTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

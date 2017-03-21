@@ -21,6 +21,10 @@ class HomeViewController: UIViewController {
         
         self.tableView.dataSource = self
         self.tableView.tableFooterView = UIView()
+        self.tableView.register(UINib(nibName: "TweetTableViewCell", bundle: nil), forCellReuseIdentifier: "TweetTableViewCell")
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 80
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -47,9 +51,10 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //TODO
-        let cell = UITableViewCell()
-        cell.textLabel?.text = viewModel.tweets[indexPath.row].text
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TweetTableViewCell", for: indexPath) as! TweetTableViewCell
+        let thisTweet = viewModel.tweets[indexPath.row]
+        cell.headerLabel.text = thisTweet.username
+        cell.bodyLabel.text = thisTweet.text
         return cell
     }
     
