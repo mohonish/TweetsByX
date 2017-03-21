@@ -26,7 +26,8 @@ public struct Tweet {
             let thisUsername = thisUser["screen_name"] as? String {
             self.username = thisUsername
         }
-        if let userImagePath = json["profile_image_url"] as? String,
+        if let thisUser = json["user"] as? Dictionary<String, Any>,
+            let userImagePath = thisUser["profile_image_url"] as? String,
             let userImageURL = URL(string: userImagePath) {
             self.profileImageURL = userImageURL
         }

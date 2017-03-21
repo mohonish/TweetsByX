@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class HomeViewController: UIViewController {
 
@@ -16,6 +17,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.title = "@" + Constants.Config.twitterHandle
         
         self.viewModel.delegate = self
         
@@ -55,6 +58,7 @@ extension HomeViewController: UITableViewDataSource {
         let thisTweet = viewModel.tweets[indexPath.row]
         cell.headerLabel.text = thisTweet.username
         cell.bodyLabel.text = thisTweet.text
+        cell.tweetImageView.kf.setImage(with: thisTweet.profileImageURL)
         return cell
     }
     
